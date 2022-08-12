@@ -1,0 +1,28 @@
+.food_info .swiper-button-next, .main_container .swiper-button-prev {
+	display: none;
+}
+
+.swiper-button-prev, .swiper-button-next {
+	left: auto !important;
+    right: 10px !important;
+    top: 22px !important;
+    width: 15px !important;
+    height: 15px !important;
+    /* background: black !important; */
+    box-shadow: 3px 3px !important;
+    color: transparent !important;
+}
+
+.swiper-button-prev {
+	background-image: url("../imgs/prev.png") !important;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.swiper-button-next {
+	background-image: url("../imgs/next.png") !important;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}

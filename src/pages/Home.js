@@ -3,17 +3,19 @@ import styles from './Home.module.css'
 import styled from 'styled-components'
 import axios from 'axios';
 import Navbar from '../components/Navbar'
+import UserInfo from "../components/UserInfo";
 
+import './swiper.css'
 import fork from '../imgs/fork.png'
 
-import SwiperCore,{ Navigation} from "swiper";
+import SwiperCore,{ Navigation, Pagination} from "swiper";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import "swiper/css"; //basic
 import "swiper/css/navigation";
 
 import {useNavigate} from 'react-router-dom';
 
-SwiperCore.use([Navigation]);
+SwiperCore.use([Navigation, Pagination]);
 
 function Home() {
     const API_key = "cf018bbda8734738a70b"
@@ -63,13 +65,14 @@ function Home() {
     return(
         <div>
             <Navbar />
-
+            <UserInfo />
             {Object.keys(food).length !== 0 &&
             <ContainerWrapper>
                 {/* <input value={query} onChange={e => setQeury(e.target.value)} /> */}
                 {food.map((food) => (
                 <div KEY={food.RCP_SEQ} id={food.RCP_SEQ} className='food_container' onClick={onClickFood}>
                     <img src={food.ATT_FILE_NO_MAIN} alt="" />
+                    
                     <div className="food_info"> 
                         <div className="food_name">{food.RCP_NM}</div>
 
@@ -137,6 +140,18 @@ const ContainerWrapper = styled.div `
         box-sizing: border-box;
     }
 
+    .food_info .swiper-button-next, .food_info .swiper-button-prev {
+        display: none;
+    }
+    
+    .food_info:hover .swiper-button-next, .food_info:hover .swiper-button-prev {
+        display: flex;
+        color: black;
+    }
+    
+    .food_info:hover .swiper-button-next.swiper-button-disabled, .food_info:hover .swiper-button-prev.swiper-button-disabled{
+        display:none;   
+    }
     img {
         width: 265px;
     }

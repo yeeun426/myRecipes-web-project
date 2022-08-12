@@ -13,18 +13,35 @@
     width: 25px !important;
 }
 
-:global .swiper-button-prev.swiper-button-disabled{
-    display:none;   
-}
-
-:global .swiper-button-next.swiper-button-disabled{
-    display:none;   
-}
-
 .rcp_ingredients {
     overflow: hidden;
     max-height: 195px;
     display: -webkit-box;
     -webkit-line-clamp: 10;
     -webkit-box-orient: vertical;
+}
+
+.food_name{
+    display: flex;
+    justify-content: space-between;
+}
+
+.food_name span {
+    margin-left: 10px;
+}
+
+.UserInfo img {
+    width: 180px;
+    border-radius: 50%;
+}
+
+.UserInfo{
+    text-align: center;
+    padding-top: 30px;
+}
+
+.user_info {
+    font-size: 23px;
+    font-weight: bold;
+    margin: 10px 0;
 }
