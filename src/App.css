@@ -1,8 +1,26 @@
+
 body{
     margin: 0px;
+    font-family: '웰컴체 Regular';
+    line-height: 1.35;
 }
 
 .App {
-    height: 100vh;
+    height: 100%;
     background: #80808026;
+}
+
+@font-face {
+    font-family: "EF_Diary";
+    src: url('./font/EF_Diary.ttf');
+}
+
+@font-face {
+    font-family: "NanumGothic";
+    src: url('./font/NanumGothic.ttf');
+}
+
+@font-face {
+    font-family: "웰컴체 Regular";
+    src: url('./font/웰컴체 Regular.ttf');
 }

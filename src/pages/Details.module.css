@@ -1,0 +1,34 @@
+.main_img {
+    width: 470px;
+    height: 470px;
+}
+
+.rcp_step img {
+    height: 250px;
+    margin-top: 70px;
+}
+
+.rcp_step{
+    width: 380px;
+}
+
+.img_cotainer{
+    display: flex;
+}
+
+.img_right_info {
+    padding: 30px;
+    height: 470px;
+    box-sizing: border-box;
+}
+
+.sub_info {
+    font-size: 14px;
+    color: #808080;
+    font-weight: 600;
+}
+
+.manual {
+    text-align: left;
+    word-break: keep-all;
+}
