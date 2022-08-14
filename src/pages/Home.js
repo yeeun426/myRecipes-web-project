@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import axios from 'axios';
 import Navbar from '../components/Navbar'
 import UserInfo from "../components/UserInfo";
+import star from '../imgs/star.png'
 
 import './swiper.css'
 import fork from '../imgs/fork.png'
@@ -23,8 +24,14 @@ function Home() {
     
     const [food, setFood] = useState([]);
     //api 검색 키워드(쿼리 스트링)
-    const [query, setQeury] = useState('');
-    
+    // const [query, setQeury] = useState('');
+    const [search, setSearch] = useState("");
+
+    const handleSearch = (e) => {
+        console.log(food)
+        setSearch(e.target.value)
+    };
+
     useEffect(() => {
     const SearchFood = async(e) => {
         try {
@@ -36,15 +43,19 @@ function Home() {
             console.log('처음')
             console.log(data.data.COOKRCP01.row)
 
-            for (let i = 0; i < data.data.COOKRCP01.row.length; i++) {
-                if(data.data.COOKRCP01.row[i].RCP_SEQ != null) {
-                    setFood(prev => {return[...prev, data.data.COOKRCP01.row[i]]})
-                }else{
-                    alert('error');
+            if(search === null || search === '') {
+                setFood([]); // 기존의 검색 결과 초기화
+                for (let i = 0; i < data.data.COOKRCP01.row.length; i++) {
+                    if(data.data.COOKRCP01.row[i].RCP_SEQ != null) {
+                        setFood(prev => {return[...prev, data.data.COOKRCP01.row[i]]})
+                    }else{
+                        alert('error');
+                    }
                 }
+            } else{
+                const filterData = food.filter((row) => row.RCP_NM.includes(search))
+                setFood(filterData)
             }
-
-
             }catch(err) {
                 console.log(err);
             }
@@ -52,27 +63,33 @@ function Home() {
             console.log(food)
         }
         SearchFood();
-    }, [])
+    }, [food])
 
-    // useEffect(() => {
-    // }, [food])
     const navigate = useNavigate();
 
     const onClickFood = (e) => {
         navigate('/details', {state : e.currentTarget.id})
     }
-
+    
     return(
-        <div>
+        <div className="Home">
             <Navbar />
             <UserInfo />
+            <div className='home_search'>
+                <input 
+                    placeholder='요리를 검색해보세요'
+                    onChange={handleSearch}
+                    type="text"
+                    value={search}/>
+            </div>
             {Object.keys(food).length !== 0 &&
             <ContainerWrapper>
                 {/* <input value={query} onChange={e => setQeury(e.target.value)} /> */}
                 {food.map((food) => (
                 <div KEY={food.RCP_SEQ} id={food.RCP_SEQ} className='food_container' onClick={onClickFood}>
                     <img src={food.ATT_FILE_NO_MAIN} alt="" />
-                    
+                    <img className={styles.star} src={star} alt="" />
+
                     <div className="food_info"> 
                         <div className="food_name">{food.RCP_NM}</div>
 
@@ -130,7 +147,7 @@ const ContainerWrapper = styled.div `
     font-size: 14px;
     box-shadow: 3px 3px 3px gray;
     line-height: 1.4;
-
+    position: relative;
     }
     
     .food_info{

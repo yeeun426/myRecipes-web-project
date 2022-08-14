@@ -45,3 +45,25 @@
     font-weight: bold;
     margin: 10px 0;
 }
+
+.star{
+    width: 30px !important;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+:global .Home{
+    width: 100%;
+}
+
+:global .home_search input{
+    width: 500px;
+    height: 35px;
+    border: none;
+}
+
+:global .home_search {
+    text-align: center;
+    padding: 10px 0;
+}
