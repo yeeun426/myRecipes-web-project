@@ -2,10 +2,12 @@ import React, {useState, useEffect} from 'react';
 import styles from './Home.module.css'
 import styled from 'styled-components'
 import axios from 'axios';
+
 import Navbar from '../components/Navbar'
 import UserInfo from "../components/UserInfo";
-import star from '../imgs/star.png'
+import Loading from '../components/Loading'
 
+import star from '../imgs/star.png'
 import './swiper.css'
 import fork from '../imgs/fork.png'
 
@@ -19,13 +21,16 @@ import {useNavigate} from 'react-router-dom';
 SwiperCore.use([Navigation, Pagination]);
 
 function Home() {
-    const API_key = "cf018bbda8734738a70b"
+    // const API_key = "cf018bbda8734738a70b"
+    const API_key = "61cc3335fecc42589c3a"
+
     const url = `https://openapi.foodsafetykorea.go.kr/api/${API_key}/COOKRCP01/json/1/100`;
     
-    const [food, setFood] = useState([]);
-    //api 검색 키워드(쿼리 스트링)
-    // const [query, setQeury] = useState('');
-    const [search, setSearch] = useState("");
+    const [food, setFood] = useState([]); // food 배열 저장
+
+    const [search, setSearch] = useState(""); // 검색 값 저장
+
+    const [loading, setLoading] = useState(true);
 
     const handleSearch = (e) => {
         console.log(food)
@@ -33,21 +38,27 @@ function Home() {
     };
 
     useEffect(() => {
+        
     const SearchFood = async(e) => {
+
         try {
             const data = await axios({
             method:'get', //정보 조회
             url: url
             })
 
+            console.log(loading);
             console.log('처음')
-            console.log(data.data.COOKRCP01.row)
+            console.log(data.data.COOKRCP01.row)            
 
             if(search === null || search === '') {
+                setLoading(true);
                 setFood([]); // 기존의 검색 결과 초기화
                 for (let i = 0; i < data.data.COOKRCP01.row.length; i++) {
+                    setLoading(true);
                     if(data.data.COOKRCP01.row[i].RCP_SEQ != null) {
                         setFood(prev => {return[...prev, data.data.COOKRCP01.row[i]]})
+                        setLoading(false);
                     }else{
                         alert('error');
                     }
@@ -55,12 +66,14 @@ function Home() {
             } else{
                 const filterData = food.filter((row) => row.RCP_NM.includes(search))
                 setFood(filterData)
+                setLoading(false);
             }
             }catch(err) {
                 console.log(err);
             }
             console.log('다음')
             console.log(food)
+            
         }
         SearchFood();
     }, [food])
@@ -82,6 +95,9 @@ function Home() {
                     type="text"
                     value={search}/>
             </div>
+
+        {loading ? <Loading />
+        :  <div>   
             {Object.keys(food).length !== 0 &&
             <ContainerWrapper>
                 {/* <input value={query} onChange={e => setQeury(e.target.value)} /> */}
@@ -129,6 +145,8 @@ function Home() {
                 ))}
             </ContainerWrapper>
             }
+        </div>
+        }
         </div>
     )
 }
